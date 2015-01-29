@@ -3,10 +3,8 @@ module Straight
 
     class Adapter
 
-      class CurrencyNotFound     < Exception; end
       class FetchingFailed       < Exception; end
       class CurrencyNotSupported < Exception; end
-      class NilValueNotAllowed   < Exception; end
 
       def initialize(rates_expire_in: 1800)
         @rates_expire_in = rates_expire_in # in seconds
@@ -53,7 +51,7 @@ module Straight
         end
       end
 
-      # this method will be used in #rate_for method in child classes, and will be checking that 
+      # This method will be used in #rate_for method in child classes, and will be checking that 
       # rate value != nil
       def rate_to_f(rate)
         rate ? rate.to_f : raise(NilValueNotAllowed)
