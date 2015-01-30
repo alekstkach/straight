@@ -12,7 +12,7 @@ RSpec.describe Straight::ExchangeRate::BtceAdapter do
   end
 
   it "rases exception if rate is nil" do
-    expect( -> { @exchange_adapter.rate_to_f(nil) }).to raise_error(Straight::ExchangeRate::Adapter::NilValueNotAllowed)
+    expect( -> { @exchange_adapter.rate_to_f(nil) }).to raise_error(Straight::ExchangeRate::Adapter::CurrencyNotSupported)
   end
 
 end
