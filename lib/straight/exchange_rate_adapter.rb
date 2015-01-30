@@ -54,7 +54,7 @@ module Straight
       # This method will be used in #rate_for method in child classes, and will be checking that 
       # rate value != nil
       def rate_to_f(rate)
-        rate ? rate.to_f : raise(NilValueNotAllowed)
+        rate ? rate.to_f : raise(CurrencyNotSupported)
       end
 
     end

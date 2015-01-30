@@ -61,7 +61,18 @@ module Straight
       # If as_sym is set to true, then each status is returned as Symbol, otherwise
       # an equivalent Integer from STATUSES is returned.
       def status(as_sym: false, reload: false)
-        @status = super() if defined?(super)
+
+        if defined?(super)
+          begin 
+            @status = super
+          # if no method with arguments found in the class
+          # we're prepending to, then let's use a standard getter
+          # with no argument.
+          rescue ArgumentError
+            @status = super()
+          end
+        end
+
         # Prohibit status update if the order was paid in some way.
         # This is just a caching workaround so we don't query
         # the blockchain needlessly. The actual safety switch is in the setter.
@@ -106,8 +117,12 @@ module Straight
         # by the time a callback checks the status it's already set.
         @status_changed = (@status != new_status)
         @status         = new_status
-        gateway.order_status_changed(self) if @status_changed
+        gateway.order_status_changed(self) if status_changed?
         super if defined?(super)
+      end
+
+      def status_changed?
+        @status_changed
       end
 
     end
