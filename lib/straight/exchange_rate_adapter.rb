@@ -3,7 +3,6 @@ module Straight
 
     class Adapter
 
-      class CurrencyNotFound     < Exception; end
       class FetchingFailed       < Exception; end
       class CurrencyNotSupported < Exception; end
       class NilValueNotAllowed   < Exception; end
@@ -43,7 +42,7 @@ module Straight
       # this method will be used in #rate_for method in child classes, and will be checking that 
       # rate value != nil
       def rate_to_f(rate)
-        rate ? rate.to_f : raise(NilValueNotAllowed)
+        rate ? rate.to_f : raise(CurrencyNotSupported)
       end
 
     end
